@@ -39,6 +39,6 @@ export function Producto (nombre, precio, stock) {
     }
 
     this.obtenerInfo = function () {
-        return `Nombre: ${this.getNombre} Precio: ${this.getPrecio} Stock: ${this.getStock}`
+        return `Nombre: ${this.getNombre()} Precio: ${this.getPrecio()} Stock: ${this.getStock()}`
     }
 }

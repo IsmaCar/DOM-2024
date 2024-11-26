@@ -95,11 +95,13 @@ ${productos.map((producto,index)=>{
     ${producto.obtenerInfo()}
     <button class="btn-actualizar-stock" data-index="${index}">actualizar stock</button> 
     </li>`
-}).join("")
-}
+})
+.join("")}
 `;
 
-document.querySelectorAll(".btn-actualiza-stock")
+//Escuchamos el evento click en los botones de actualizar stock
+
+document.querySelectorAll(".btn-actualizar-stock")
     .forEach((btn)=>{
         btn.addEventListener("click", () => {
             alert("Actualizar Stock")
