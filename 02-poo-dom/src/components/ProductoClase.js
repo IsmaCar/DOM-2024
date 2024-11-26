@@ -12,36 +12,36 @@ export class ProductoClase {
     }
 
     setNombre(nombre){
-        this.#nombre = nombre
+        this.#nombre = nombre;
     }
 
-    getNombre(nombre){
-        return this.#nombre = nombre
+    getNombre(){
+        return this.#nombre;
     }
 
     setPrecio(precio){
-        this.#precio = precio
+        this.#precio = precio;
     }
 
-    getPrecio(precio){
-        return this.#precio = precio
+    getPrecio(){
+        return this.#precio;
     }
 
     setStock(stock){
-        this.#stock = stock
+        this.#stock = stock;
     }
 
-    getStock(stock){
-        return this.#stock = stock
+    getStock(){
+        return this.#stock;
     }
 
     actualizarStock(cantidad){
-        this.#stock += cantidad
+        this.#stock += cantidad;
 
-        return `La cantidad de productos ahora es ${this.getStock}`
+        return `La cantidad de productos ahora es ${this.getStock()}`;
     }
 
     obtenerInfo(){
-        return `Nombre: ${this.getNombre} Precio: ${this.getPrecio} Cantidad: ${this.getStock}`
+        return `Nombre: ${this.getNombre()} Precio: ${this.getPrecio()} Cantidad: ${this.getStock()}`;
     }
 }
