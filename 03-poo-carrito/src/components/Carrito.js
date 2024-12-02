@@ -47,7 +47,7 @@ import { Producto } from "./Producto"
         
         //crear un array de productos
         if(datosCarrito){
-            this.productos = datosCarrito.map((producto)=> new Producto(producto.nombre, producto.cantidad, producto.cantidad));
+            this.productos = datosCarrito.map((producto)=> new Producto(producto.nombre, producto.cantidad, producto.precio));
         }
     }
 }

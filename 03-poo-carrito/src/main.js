@@ -5,52 +5,68 @@ const carrito = new Carrito();
 // cargamos los datos del localStorage al carrito.
 carrito.cargarLocalStorage();
 
-function pintarInterfazWeb() {
-
-  const app = document.getElementById("app");
-  function pintarCarrito() {
-    const lista = document.getElementById("lista-productos");
-    lista.innerHTML = carrito.productos
-      .map(
-        (producto, index) => `
-      <li data-id="${index}"> ${producto.obtenerInfo()}    
-      <button class="btn-editar" data-id="${index}">Editar</button>
-      <button class="btn-borrar" data-id="${index}">Borrar</button>
-      </li>`
-      )
-      .join("");
-    // calcular el TOTAL
-  }
 
 
-  const handlerSubmit = (event) => {
-    
-    event.preventDefault();
+function pintarCarrito() {
+  
+  const lista = document.getElementById("lista-productos");
+  
+  lista.innerHTML = carrito.productos
+  .map(
+    (producto, index) => `
+    <li data-id="${index}"> ${producto.obtenerInfo()}    
+    <button class="btn-editar" data-id="${index}">Editar</button>
+    <button class="btn-borrar" data-id="${index}">Borrar</button>
+    </li>`
+  )
+  .join("");
+  // calcular el TOTAL
+}
 
-    const nombre = document.getElementById("nombre-producto").value.trim();
-    const cantidad = Number(document.querySelector("#cantidad-producto").value);
-    const precio = Number(document.querySelector("#precio-producto").value);
-    // validaciones del formulario básicas.
-    if (!nombre || cantidad < 0 || precio < 0) {
-      alert("Debes de insertar valores correctos");
-    }
+
+const handlerSubmit = (event) => {
+  
+  event.preventDefault();
+  
+  const nombre = document.getElementById("nombre-producto").value.trim();
+  const cantidad = Number(document.querySelector("#cantidad-producto").value);
+  const precio = Number(document.querySelector("#precio-producto").value);
+  // validaciones del formulario básicas.
+  if (!nombre || cantidad < 0 || precio < 0) {
+    alert("Debes de insertar valores correctos");
+  }else{
     // añadimos el nombre, cantidad y precio a un producto del carrito
-    carrito. addProduct(nombre, cantidad, precio);
+    carrito.addProduct(nombre, cantidad, precio);
     // ahora pintamos el carrito.
     pintarCarrito();
-  };
+  }
+  event.target.reset();
+};
 
 
-  const opcionesProducto = (event) => {
-    // target es el COMPONENTE donde he hecho CLICK o lo que sea
-    const indice = Number(event.target.dataset.id); // cuando pulso click obtengo el componente
-    // event.target.classList.contains()
-    if (event.target.classList.contains("btn-borrar")) {
-      carrito.deleteProduct(indice);
-      pintarCarrito();
-    }
-  };
+const opcionesProducto = (event) => {
+  // target es el COMPONENTE donde he hecho CLICK o lo que sea
+  const indice = Number(event.target.dataset.id); // cuando pulso click obtengo el componente
+  // event.target.classList.contains()
+  if (event.target.classList.contains("btn-borrar")) {
+    carrito.deleteProduct(indice);
+    pintarCarrito();
+  }
 
+  if(event.target.classList.contains("btn-editar")){
+  const newCantidad = prompt("Introduzca la nueva cantidad", carrito.productos[indice].cantidad);
+  
+  if(newCantidad && Number(newCantidad < 0)) throw new Error("Introduce un numero positivo");
+
+  carrito.updateProduct(indice, Number(newCantidad));
+  pintarCarrito();
+
+  }
+};
+
+function pintarInterfazWeb() {
+  const app = document.getElementById("app");
+  
 
   app.innerHTML = `
     <h1> Carrito de la Compra de productos </h1>
@@ -60,9 +76,9 @@ function pintarInterfazWeb() {
       <input id="precio-producto" type="number" placeholder="precio" >
       <button type="submit" > Agregar Producto </button>
     </form>
+
     <div id="lista-productos" ></div>
-  
-  
+
   `;
 
 
@@ -74,6 +90,8 @@ function pintarInterfazWeb() {
   document
     .getElementById("lista-productos")
     .addEventListener("click", opcionesProducto);
+
+pintarCarrito();
 }
 // ------------ INICIO DE LA APLICACIÓN ------
 pintarInterfazWeb();
